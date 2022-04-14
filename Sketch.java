@@ -2,22 +2,29 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Sketch extends PApplet {
-
+  
 
   PImage imgBluePaddle;
   PImage imgRedPaddle;
   
-  
-  float fltCirSpeedY = 15;
-  float fltCirSpeedX = 15;
+  float fltCirSpeedY = 10;
+  float fltCirSpeedX = 10;
 
-  float fltCircleX = 202;
-  float fltCircleY = 274;
+  float fltCircleX = 233;
+  float fltCircleY = 712;
 
-  float fltPaddleX = 200;
-  float fltPaddleY = 100;
+  float fltBluePaddleX = 200;
+  float fltBluePaddleY = 100;
 
   float fltBluePaddleSpeed = 8;
+  
+  float fltRedPaddleX = 235;
+  float fltRedPaddleY = 700;
+  float fltRedPaddleSpeed = 10;
+  
+  int intScoreRed = 0;
+  int intScoreBlue = 0;
+
 	
   /**
    * Called once at the beginning of execution, put your size all in this method
@@ -35,6 +42,7 @@ public class Sketch extends PApplet {
   public void setup() {
     background(210, 255, 173);
     imgBluePaddle = loadImage("paddleBlu.png");
+    imgRedPaddle = loadImage("paddleRed.png");
 
   }
 
@@ -50,43 +58,77 @@ public class Sketch extends PApplet {
     fltCircleY += fltCirSpeedY;
     fltCircleX += fltCirSpeedX;
 
-    if (fltCircleY > height -25  || fltCircleY < 0 + 25){
+    if (fltCircleY > height  || fltCircleY < 0 ){
       fltCirSpeedY *= -1;
     }
     if (fltCircleX > width - 25 || fltCircleX < 0 + 25){
       fltCirSpeedX *= -1;
     }
 
-    image(imgBluePaddle, fltPaddleX, fltPaddleY);
-    fltPaddleX += fltBluePaddleSpeed;
-    if (fltPaddleX < 0 + 20 || fltPaddleX > width - 80){
+    image(imgBluePaddle, fltBluePaddleX, fltBluePaddleY);
+    fltBluePaddleX += fltBluePaddleSpeed;
+    if (fltBluePaddleX < 0 + 20 || fltBluePaddleX > width - 80){
       fltBluePaddleSpeed *= -1;
     }
- 
-    if (fltCircleX > fltPaddleX && fltCircleX < fltPaddleX + 100){
-      if (fltCircleY > fltPaddleY -6 && fltCircleY < fltPaddleY + 20){
-        if (fltBluePaddleSpeed < 0 ){
 
+    image(imgRedPaddle, fltRedPaddleX, fltRedPaddleY);
+    fltRedPaddleX += fltRedPaddleSpeed;
+    fltRedPaddleY = ((fltRedPaddleX-400) * (fltRedPaddleX-400)) / 800 +500;
+    if (fltRedPaddleX < 0 + 20 || fltRedPaddleX > width - 80){
+      fltRedPaddleSpeed *= -1;
+      
+    }
+    if (fltCircleX > fltRedPaddleX && fltCircleX < fltRedPaddleX + 100){
+      if (fltCircleY > fltRedPaddleY -6 && fltCircleY < fltRedPaddleY + 20){
+        if (fltRedPaddleSpeed < 0 ){
           fltCirSpeedX = -5;
           fltCirSpeedY *= -1;
         }
-
-    
-        if (fltBluePaddleSpeed > 0){
-         
+        if (fltRedPaddleSpeed > 0){
           fltCirSpeedX = 5;
           fltCirSpeedY *= -1;
         }
-        
+      }
+    }
+
+    if (fltCircleX > fltBluePaddleX && fltCircleX < fltBluePaddleX + 100){
+      if (fltCircleY > fltBluePaddleY -6 && fltCircleY < fltBluePaddleY + 20){
+        if (fltBluePaddleSpeed < 0){
+          fltCirSpeedX = -5;
+          fltCirSpeedY *= -1;
+        }
+        if (fltBluePaddleSpeed > 0){
+          fltCirSpeedX = 5;
+          fltCirSpeedY *= -1;
         }
       }
-
-    
-    
-
-  }
-      
     }
+    if (fltCircleY - 20 <= 0){
+      intScoreRed += 1;
+    }
+    fill(255,255,255);
+    textSize(50);
+    text(intScoreRed, 100, 100);
+    if (fltCircleY + 20 >= height){
+      intScoreBlue += 1;
+    
+    }
+    text(intScoreBlue, 700, 100);
+  }
+}
+    
+  
+
+
+
+    
+    
+
+  
+      
+
+  
+
 
   
 
