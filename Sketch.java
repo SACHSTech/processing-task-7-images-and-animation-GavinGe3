@@ -5,17 +5,19 @@ public class Sketch extends PApplet {
 
 
   PImage imgBluePaddle;
+  PImage imgRedPaddle;
   
-  float fltCirSpeedX = 1;
-  float fltCirSpeedY = 1;
+  
+  float fltCirSpeedY = 5;
+  float fltCirSpeedX = 5;
 
-  float fltCircleX = 200;
-  float fltCircleY = 200;
+  float fltCircleX = 202;
+  float fltCircleY = 274;
 
   float fltPaddleX = 200;
   float fltPaddleY = 100;
 
-  float fltPaddleSpeedX = 5;
+  float fltBluePaddleSpeed = 5;
 	
   /**
    * Called once at the beginning of execution, put your size all in this method
@@ -43,35 +45,37 @@ public class Sketch extends PApplet {
 
     background(32);
 
-    ellipse(fltCircleX, fltCircleY, 50, 50);
-    fltCircleX += fltCirSpeedX;
+    ellipse(fltCircleX, fltCircleY, 25, 25);
+    
     fltCircleY += fltCirSpeedY;
+    fltCircleX += fltCirSpeedX;
 
-    if (fltCircleX > width -25 || fltCircleX < 0 + 25){
-      fltCirSpeedX *= -1;
-
-    }
     if (fltCircleY > height -25  || fltCircleY < 0 + 25){
       fltCirSpeedY *= -1;
     }
+    if (fltCircleX > width - 25 || fltCircleX < 0 + 25){
+      fltCirSpeedX *= -1;
+    }
 
     image(imgBluePaddle, fltPaddleX, fltPaddleY);
-    fltPaddleX += fltPaddleSpeedX;
+    fltPaddleX += fltBluePaddleSpeed;
     if (fltPaddleX < 0 + 20 || fltPaddleX > width - 20){
-      fltPaddleSpeedX *= -1;
+      fltBluePaddleSpeed *= -1;
     }
-
-    for (int i = 0; i < 50; i++){
-      if (fltCircleX + i == fltPaddleX && fltCircleY + i == fltPaddleY){
-        fltCirSpeedX *= -1;
+    if (fltCircleX > fltPaddleX && fltCircleX < fltPaddleX + 100){
+      if (fltCircleY > fltPaddleY && fltCircleY < fltPaddleY + 45){
         fltCirSpeedY *= -1;
-      
+        fltCirSpeedX *= -1;
+
       }
-
-
     }
+
+      
+      
+
 
   }
+
+}
   
   // define other methods down here.
-}
