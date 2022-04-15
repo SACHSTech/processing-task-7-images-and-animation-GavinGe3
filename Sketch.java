@@ -1,27 +1,34 @@
 import processing.core.PApplet;
 import processing.core.PImage;
+import java.util.Random;
 
 public class Sketch extends PApplet {
-  
 
+  Random rand = new Random();
+  
+  // Image variables
   PImage imgBluePaddle;
   PImage imgRedPaddle;
+  PImage imgBackground;
   
-  float fltCirSpeedY = 10;
+  // ball speed and location variables
+  float fltCirSpeedY = 20;
   float fltCirSpeedX = 10;
 
-  float fltCircleX = 233;
-  float fltCircleY = 712;
+  int intCircleX = rand.nextInt(720);
+  int intCircleY = rand.nextInt(960);
 
+  // paddle location and speed variables
   float fltBluePaddleX = 200;
   float fltBluePaddleY = 100;
-
   float fltBluePaddleSpeed = 8;
   
+  // red paddle location and speed variables
   float fltRedPaddleX = 235;
   float fltRedPaddleY = 700;
   float fltRedPaddleSpeed = 10;
   
+  // Score counter variables
   int intScoreRed = 0;
   int intScoreBlue = 0;
 
@@ -31,7 +38,7 @@ public class Sketch extends PApplet {
    */
   public void settings() {
 	// put your size call here
-    size(800, 800);
+    size(720, 960);
 
   }
   
@@ -40,9 +47,13 @@ public class Sketch extends PApplet {
    * values here i.e background, stroke, fill etc.
    */
   public void setup() {
-    background(210, 255, 173);
+
+    // Load images
     imgBluePaddle = loadImage("paddleBlu.png");
     imgRedPaddle = loadImage("paddleRed.png");
+    imgBackground = loadImage("background.png");
+
+    
 
   }
 
@@ -51,71 +62,106 @@ public class Sketch extends PApplet {
    */
   public void draw() {
 
+    // background
     background(32);
+    image(imgBackground, 0, 0);
 
-    ellipse(fltCircleX, fltCircleY, 25, 25);
-    
-    fltCircleY += fltCirSpeedY;
-    fltCircleX += fltCirSpeedX;
+    // draw and animate ball
+    ellipse(intCircleX, intCircleY, 25, 25);
+    intCircleY += fltCirSpeedY;
+    intCircleX += fltCirSpeedX;
 
-    if (fltCircleY > height  || fltCircleY < 0 ){
+    // Collision detection of ball and walls
+    if (intCircleY > height  || intCircleY < 0){
       fltCirSpeedY *= -1;
     }
-    if (fltCircleX > width - 25 || fltCircleX < 0 + 25){
+
+    if (intCircleX > width - 25 || intCircleX < 0 + 25){
       fltCirSpeedX *= -1;
     }
 
+    // draw and animate blue paddle
     image(imgBluePaddle, fltBluePaddleX, fltBluePaddleY);
     fltBluePaddleX += fltBluePaddleSpeed;
+
+    // Collission detection with blue paddle and wall
     if (fltBluePaddleX < 0 + 20 || fltBluePaddleX > width - 80){
       fltBluePaddleSpeed *= -1;
     }
 
+    // draw and animate red paddle
     image(imgRedPaddle, fltRedPaddleX, fltRedPaddleY);
     fltRedPaddleX += fltRedPaddleSpeed;
-    fltRedPaddleY = ((fltRedPaddleX-400) * (fltRedPaddleX-400)) / 800 +500;
+    fltRedPaddleY = ((fltRedPaddleX-400) * (fltRedPaddleX-400)) / 800 + 700;
+    
+
+    // Collission detection of red paddle and wall
     if (fltRedPaddleX < 0 + 20 || fltRedPaddleX > width - 80){
       fltRedPaddleSpeed *= -1;
       
     }
-    if (fltCircleX > fltRedPaddleX && fltCircleX < fltRedPaddleX + 100){
-      if (fltCircleY > fltRedPaddleY -6 && fltCircleY < fltRedPaddleY + 20){
+    // Collission detection of red paddle and ball
+    if (intCircleX > fltRedPaddleX && intCircleX < fltRedPaddleX + 104){
+      if (intCircleY > fltRedPaddleY -12 && intCircleY < fltRedPaddleY + 36){
         if (fltRedPaddleSpeed < 0 ){
           fltCirSpeedX = -5;
           fltCirSpeedY *= -1;
+          
         }
         if (fltRedPaddleSpeed > 0){
           fltCirSpeedX = 5;
           fltCirSpeedY *= -1;
+          
         }
+        if (intCircleY > fltRedPaddleY + 12){
+          intCircleY += 20;
+        }
+        if (intCircleY < fltRedPaddleY + 12){
+          intCircleY -= 20;
       }
     }
-
-    if (fltCircleX > fltBluePaddleX && fltCircleX < fltBluePaddleX + 100){
-      if (fltCircleY > fltBluePaddleY -6 && fltCircleY < fltBluePaddleY + 20){
+  }
+    // Collision detection of  blue paddle and ball
+    if (intCircleX > fltBluePaddleX && intCircleX < fltBluePaddleX + 104){
+      if (intCircleY > fltBluePaddleY -12 && intCircleY < fltBluePaddleY + 36){
         if (fltBluePaddleSpeed < 0){
           fltCirSpeedX = -5;
           fltCirSpeedY *= -1;
+          fltBluePaddleY = rand.nextInt(480);
+          
         }
         if (fltBluePaddleSpeed > 0){
           fltCirSpeedX = 5;
           fltCirSpeedY *= -1;
+          fltBluePaddleY = rand.nextInt(480);
+          
+        }
+        if (intCircleY > fltBluePaddleY + 12){
+          intCircleY += 20;
+        }
+        if (intCircleY < fltBluePaddleY + 12){
+          intCircleY -= 20;
         }
       }
     }
-    if (fltCircleY - 20 <= 0){
+    // if red scores give red points
+    if (intCircleY - 20 <= 0){
       intScoreRed += 1;
     }
-    fill(255,255,255);
-    textSize(50);
-    text(intScoreRed, 100, 100);
-    if (fltCircleY + 20 >= height){
-      intScoreBlue += 1;
     
+    // if blue scores give blue points
+    if (intCircleY + 20 >= height){
+      intScoreBlue += 1;
     }
-    text(intScoreBlue, 700, 100);
+    // print red and blue points
+    textSize(50);
+    fill(255,255,255);
+    text(intScoreRed, 360, 550);
+    text(intScoreBlue, 360, 430);
   }
 }
+
+
     
   
 
