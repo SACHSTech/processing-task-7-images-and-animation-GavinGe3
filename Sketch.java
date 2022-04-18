@@ -1,9 +1,12 @@
 import processing.core.PApplet;
 import processing.core.PImage;
+
+// import random class
 import java.util.Random;
 
 public class Sketch extends PApplet {
 
+  // declare global random variable
   Random rand = new Random();
   
   // Image variables
@@ -11,7 +14,7 @@ public class Sketch extends PApplet {
   PImage imgRedPaddle;
   PImage imgBackground;
   
-  // ball speed and location variables
+  // ball speed and random location variables
   float fltCirSpeedY = 20;
   float fltCirSpeedX = 10;
 
@@ -34,7 +37,7 @@ public class Sketch extends PApplet {
 
 	
   /**
-   * Called once at the beginning of execution, put your size all in this method
+   * Declares screen size
    */
   public void settings() {
 	// put your size call here
@@ -43,8 +46,7 @@ public class Sketch extends PApplet {
   }
   
   /** 
-   * Called once at the beginning of execution.  Add initial set up
-   * values here i.e background, stroke, fill etc.
+   * Loads Images
    */
   public void setup() {
 
@@ -60,6 +62,7 @@ public class Sketch extends PApplet {
   /**
    * Called repeatedly, anything drawn to the screen goes here
    */
+
   public void draw() {
 
     // background
@@ -71,9 +74,14 @@ public class Sketch extends PApplet {
     intCircleY += fltCirSpeedY;
     intCircleX += fltCirSpeedX;
 
-    // Collision detection of ball and walls
-    if (intCircleY > height  || intCircleY < 0){
+    // Collision detection of ball and walls and score updater
+    if (intCircleY > height)  {
       fltCirSpeedY *= -1;
+      intScoreBlue += 1;
+    }
+    if (intCircleY < 0){
+      fltCirSpeedY *= -1;
+      intScoreRed += 1;
     }
 
     if (intCircleX > width - 25 || intCircleX < 0 + 25){
@@ -98,8 +106,8 @@ public class Sketch extends PApplet {
     // Collission detection of red paddle and wall
     if (fltRedPaddleX < 0 + 20 || fltRedPaddleX > width - 80){
       fltRedPaddleSpeed *= -1;
-      
     }
+
     // Collission detection of red paddle and ball
     if (intCircleX > fltRedPaddleX && intCircleX < fltRedPaddleX + 104){
       if (intCircleY > fltRedPaddleY -12 && intCircleY < fltRedPaddleY + 36){
@@ -144,20 +152,12 @@ public class Sketch extends PApplet {
         }
       }
     }
-    // if red scores give red points
-    if (intCircleY - 20 <= 0){
-      intScoreRed += 1;
-    }
-    
-    // if blue scores give blue points
-    if (intCircleY + 20 >= height){
-      intScoreBlue += 1;
-    }
+
     // print red and blue points
     textSize(50);
     fill(255,255,255);
-    text(intScoreRed, 360, 550);
-    text(intScoreBlue, 360, 430);
+    text(intScoreRed, 345, 550);
+    text(intScoreBlue, 345, 430);
   }
 }
 
