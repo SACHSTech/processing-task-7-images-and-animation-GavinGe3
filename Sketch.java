@@ -14,12 +14,15 @@ public class Sketch extends PApplet {
   PImage imgRedPaddle;
   PImage imgBackground;
   
-  // ball speed and random location variables
+  // ball speed, size and random location variables
   float fltCirSpeedY = 20;
   float fltCirSpeedX = 10;
 
   int intCircleX = rand.nextInt(720);
   int intCircleY = rand.nextInt(960);
+
+  int intCircleSize = 25;
+
 
   // paddle location and speed variables
   float fltBluePaddleX = 200;
@@ -54,9 +57,6 @@ public class Sketch extends PApplet {
     imgBluePaddle = loadImage("paddleBlu.png");
     imgRedPaddle = loadImage("paddleRed.png");
     imgBackground = loadImage("background.png");
-
-    
-
   }
 
   /**
@@ -70,16 +70,16 @@ public class Sketch extends PApplet {
     image(imgBackground, 0, 0);
 
     // draw and animate ball
-    ellipse(intCircleX, intCircleY, 25, 25);
+    ellipse(intCircleX, intCircleY, intCircleSize, intCircleSize);
     intCircleY += fltCirSpeedY;
     intCircleX += fltCirSpeedX;
 
     // Collision detection of ball and walls and score updater
-    if (intCircleY > height)  {
+    if (intCircleY > height - 12.5) {
       fltCirSpeedY *= -1;
       intScoreBlue += 1;
     }
-    if (intCircleY < 0){
+    if (intCircleY < 0 + 12.5){
       fltCirSpeedY *= -1;
       intScoreRed += 1;
     }
@@ -96,13 +96,11 @@ public class Sketch extends PApplet {
     if (fltBluePaddleX < 0 + 20 || fltBluePaddleX > width - 80){
       fltBluePaddleSpeed *= -1;
     }
-
     // draw and animate red paddle
     image(imgRedPaddle, fltRedPaddleX, fltRedPaddleY);
     fltRedPaddleX += fltRedPaddleSpeed;
-    fltRedPaddleY = ((fltRedPaddleX-400) * (fltRedPaddleX-400)) / 800 + 700;
+    fltRedPaddleY = ((fltRedPaddleX - 400) * (fltRedPaddleX - 400)) / 800 + 700;
     
-
     // Collission detection of red paddle and wall
     if (fltRedPaddleX < 0 + 20 || fltRedPaddleX > width - 80){
       fltRedPaddleSpeed *= -1;
