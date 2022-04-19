@@ -74,11 +74,11 @@ public class Sketch extends PApplet {
     intCircleX += fltCirSpeedX;
 
     // Collision detection of ball and walls and score updater
-    if (intCircleY > height - 12.5) {
+    if (intCircleY > height - 5) {
       fltCirSpeedY *= -1;
       intScoreBlue += 1;
     }
-    if (intCircleY < 0 + 12.5){
+    if (intCircleY < 0 + 5){
       fltCirSpeedY *= -1;
       intScoreRed += 1;
     }
