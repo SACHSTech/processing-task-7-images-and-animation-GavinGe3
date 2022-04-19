@@ -4,9 +4,14 @@ import processing.core.PImage;
 // import random class
 import java.util.Random;
 
+/** 
+ * A program that animates a game of pong :)
+ * @author G. Ge
+ * 
+ */
 public class Sketch extends PApplet {
 
-  // declare global random variable
+  // initiates global random variable
   Random rand = new Random();
   
   // Image variables
@@ -37,10 +42,10 @@ public class Sketch extends PApplet {
   int intScoreRed = 0;
   int intScoreBlue = 0;
 
-	
   /**
    * Declares screen size
    */
+
   public void settings() {
 	// put your size call here
     size(720, 960);
@@ -75,10 +80,12 @@ public class Sketch extends PApplet {
 
     // Collision detection of ball and walls and score updater
     if (intCircleY > height - 5) {
+      intCircleY = height - 5;
       fltCirSpeedY *= -1;
       intScoreBlue += 1;
     }
     if (intCircleY < 0 + 5){
+      intCircleY = 5;
       fltCirSpeedY *= -1;
       intScoreRed += 1;
     }
