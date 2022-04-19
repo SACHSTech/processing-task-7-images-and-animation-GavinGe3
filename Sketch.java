@@ -23,7 +23,6 @@ public class Sketch extends PApplet {
 
   int intCircleSize = 25;
 
-
   // paddle location and speed variables
   float fltBluePaddleX = 200;
   float fltBluePaddleY = 100;
@@ -49,10 +48,10 @@ public class Sketch extends PApplet {
   }
   
   /** 
-   * Loads Images
+   * Loads Images 
    */
-  public void setup() {
 
+  public void setup() {
     // Load images
     imgBluePaddle = loadImage("paddleBlu.png");
     imgRedPaddle = loadImage("paddleRed.png");
@@ -83,8 +82,7 @@ public class Sketch extends PApplet {
       fltCirSpeedY *= -1;
       intScoreRed += 1;
     }
-
-    if (intCircleX > width - 25 || intCircleX < 0 + 25){
+    if (intCircleX > width - 12.5 || intCircleX < 0 + 12.5){
       fltCirSpeedX *= -1;
     }
 
@@ -93,7 +91,7 @@ public class Sketch extends PApplet {
     fltBluePaddleX += fltBluePaddleSpeed;
 
     // Collission detection with blue paddle and wall
-    if (fltBluePaddleX < 0 + 20 || fltBluePaddleX > width - 80){
+    if (fltBluePaddleX < 0  || fltBluePaddleX > width - 104){
       fltBluePaddleSpeed *= -1;
     }
     // draw and animate red paddle
@@ -102,7 +100,7 @@ public class Sketch extends PApplet {
     fltRedPaddleY = ((fltRedPaddleX - 400) * (fltRedPaddleX - 400)) / 800 + 700;
     
     // Collission detection of red paddle and wall
-    if (fltRedPaddleX < 0 + 20 || fltRedPaddleX > width - 80){
+    if (fltRedPaddleX < 0 || fltRedPaddleX > width - 104){
       fltRedPaddleSpeed *= -1;
     }
 
@@ -134,13 +132,14 @@ public class Sketch extends PApplet {
           fltCirSpeedX = -5;
           fltCirSpeedY *= -1;
           fltBluePaddleY = rand.nextInt(480);
+          fltBluePaddleX = rand.nextInt(600);
           
         }
         if (fltBluePaddleSpeed > 0){
           fltCirSpeedX = 5;
           fltCirSpeedY *= -1;
           fltBluePaddleY = rand.nextInt(480);
-          
+          fltBluePaddleX = rand.nextInt(600);
         }
         if (intCircleY > fltBluePaddleY + 12){
           intCircleY += 20;
@@ -154,28 +153,9 @@ public class Sketch extends PApplet {
     // print red and blue points
     textSize(50);
     fill(255,255,255);
-    text(intScoreRed, 345, 550);
-    text(intScoreBlue, 345, 430);
+    text(intScoreRed, 340, 550);
+    text(intScoreBlue, 340, 430);
   }
 }
 
-
-    
-  
-
-
-
-    
-    
-
-  
-      
-
-  
-
-
-  
-
-
-  
   // define other methods down here.
