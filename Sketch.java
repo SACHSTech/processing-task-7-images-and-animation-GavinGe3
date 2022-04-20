@@ -9,6 +9,7 @@ import java.util.Random;
  * @author G. Ge
  * 
  */
+
 public class Sketch extends PApplet {
 
   // initiates global random variable
@@ -53,11 +54,12 @@ public class Sketch extends PApplet {
   }
   
   /** 
-   * Loads Images 
+   * Sets up the initial values and images
    */
 
   public void setup() {
     // Load images
+    background(32);
     imgBluePaddle = loadImage("paddleBlu.png");
     imgRedPaddle = loadImage("paddleRed.png");
     imgBackground = loadImage("background.png");
@@ -69,8 +71,7 @@ public class Sketch extends PApplet {
 
   public void draw() {
 
-    // background
-    background(32);
+    // img background
     image(imgBackground, 0, 0);
 
     // draw and animate ball
